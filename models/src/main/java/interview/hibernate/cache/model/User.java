@@ -1,10 +1,20 @@
 package interview.hibernate.cache.model;
 
+import org.hibernate.annotations.CacheConcurrencyStrategy;
+
 import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
 @Table(name = "user")
+/**
+ * cache concurrency strategy:
+ * 1. read-only: data never change
+ * 2. read-write: guarantee strong consistency, critical cache, prevent stale data
+ * 3. transaction: same with 2 read-write
+ * 4. nostrict-read-write: not very strong consistency guarantee compare with read-write
+ */
+@org.hibernate.annotations.Cache(usage= CacheConcurrencyStrategy.READ_WRITE)
 public class User implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
