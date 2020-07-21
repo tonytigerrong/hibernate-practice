@@ -8,6 +8,7 @@ import org.hibernate.Transaction;
 import org.hibernate.cfg.Environment;
 import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.LogicalExpression;
+import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.hibernate.query.Query;
 import org.slf4j.Logger;
@@ -18,6 +19,7 @@ import org.springframework.cache.ehcache.EhCacheManagerFactoryBean;
 import org.springframework.stereotype.Service;
 import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
+import java.util.Arrays;
 import java.util.List;
 
 @Service
@@ -86,6 +88,18 @@ public class UserService {
         query.setFirstResult(pageSize*(pagenum-1));
         query.setMaxResults(pageSize);
         return query.getResultList();
+    }
+    public Long groupCount(){
+        Session session = entityManager.unwrap(Session.class);
+        Criteria criteria = session.createCriteria(User.class);
+        criteria = criteria.setProjection(
+                Projections.projectionList()
+                           .add(Projections.groupProperty("password"))
+                           .add(Projections.alias(Projections.rowCount(),"count"))
+        );
+        List results = criteria.list();
+        Object[] os = (Object[]) results.get(0);
+        return (Long) os[1];
     }
     @Transactional
     public void addUser(User user){

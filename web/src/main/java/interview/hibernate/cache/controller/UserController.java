@@ -44,6 +44,10 @@ public class UserController {
     public List<User> getAllUser(@PathVariable("pagenum") Integer pagenum){
         return userService.getAllUser(pagenum);
     }
+    @GetMapping("users/groupcount")
+    public Long grougCount(){
+        return userService.groupCount();
+    }
     /**
      * get Cache content by cache key
      * @return
