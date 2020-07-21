@@ -24,7 +24,7 @@ public class UserController {
     }
 
     /**
-     * get Cache content by cache key 
+     * get Cache content by cache key
      * @return
      */
     @GetMapping("/user/getCache")

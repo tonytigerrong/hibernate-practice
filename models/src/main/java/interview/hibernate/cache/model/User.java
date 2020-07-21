@@ -14,6 +14,7 @@ import java.io.Serializable;
  * 3. transaction: same with 2 read-write
  * 4. nostrict-read-write: not very strong consistency guarantee compare with read-write
  */
+@Cacheable
 @org.hibernate.annotations.Cache(usage= CacheConcurrencyStrategy.READ_WRITE)
 public class User implements Serializable {
     @Id

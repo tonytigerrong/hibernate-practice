@@ -4,6 +4,16 @@
          monitoring="autodetect"
          dynamicConfig="true">
     <diskStore path="./" />
+    <defaultCache
+            maxElementsInMemory="1000"
+            eternal="false"
+            timeToIdleSeconds="300"
+            timeToLiveSeconds="300"
+            overflowToDisk="false"
+            diskPersistent="false"
+            diskExpiryThreadIntervalSeconds="300"
+            memoryStoreEvictionPolicy="LRU"
+    />
     <cache name="usersCache"
            maxEntriesLocalHeap="10000"
            maxEntriesLocalDisk="1000"
