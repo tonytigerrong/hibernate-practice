@@ -2,9 +2,13 @@ package interview.hibernate.cache.service;
 
 import interview.hibernate.cache.dao.UserRepo;
 import interview.hibernate.cache.model.User;
+import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.cfg.Environment;
+import org.hibernate.criterion.Criterion;
+import org.hibernate.criterion.LogicalExpression;
+import org.hibernate.criterion.Restrictions;
 import org.hibernate.query.Query;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -60,6 +64,28 @@ public class UserService {
          */
         if( users.size() == 1 ) return users.get(0);
         else return null;
+    }
+    public User getUser3(Long id){
+        Session session = entityManager.unwrap(Session.class);
+        Criteria criteria = session.createCriteria(User.class)
+                ;
+        Criterion idCriterion = Restrictions.eq("id",id);
+        Criterion nameCriterion = Restrictions.eq("username","Smith");
+
+        LogicalExpression le = Restrictions.and(idCriterion,nameCriterion);
+        criteria.add(le);
+
+        List<User> users = criteria.list();
+        return  users.size() > 0 ? users.get(0) : null;
+
+    }
+    public List<User> getAllUser(Integer pagenum){
+        int pageSize = 2;
+        Session session = entityManager.unwrap(Session.class);
+        Query query = session.createQuery("From User");
+        query.setFirstResult(pageSize*(pagenum-1));
+        query.setMaxResults(pageSize);
+        return query.getResultList();
     }
     @Transactional
     public void addUser(User user){

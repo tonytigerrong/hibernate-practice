@@ -14,9 +14,21 @@ public class Init {
     private UserService userService;
     @Bean
     public void initUserData(){
-        User user1 = new User("David","password1");
+        User user1 = new User("David","password2");
         User user2 = new User("Smith","password2");
+
+        User user3 = new User("Philip","password2");
+        User user4 = new User("Robin","password2");
+
+        User user5 = new User("Iron","password2");
+        User user6 = new User("Apple","password2");
+
+
         userService.addUser(user1);
         userService.addUser(user2);
+        userService.addUser(user3);
+        userService.addUser(user4);
+        userService.addUser(user5);
+        userService.addUser(user6);
     }
 }
