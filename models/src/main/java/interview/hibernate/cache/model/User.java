@@ -20,7 +20,9 @@ public class User implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+    @Column(name="username")
     private String username;
+    @Column(name="password")
     private String password;
 
     public User() {
@@ -63,4 +65,6 @@ public class User implements Serializable {
     public void setPassword(String password) {
         this.password = password;
     }
+
+
 }
