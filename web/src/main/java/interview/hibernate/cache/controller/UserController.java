@@ -2,6 +2,8 @@ package interview.hibernate.cache.controller;
 
 import interview.hibernate.cache.model.User;
 import interview.hibernate.cache.service.UserService;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import net.sf.ehcache.CacheManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,11 +18,17 @@ import java.util.List;
 public class UserController {
     @Autowired
     UserService userService;
-    @GetMapping("/user/{id}")
     /**
      * Cache demo: annotation
      */
-    public User getUserById(@PathVariable("id") Long id){
+    @GetMapping("/user/{id}")
+    @ApiOperation(value = "get user by user_id"
+            ,notes = "provide an id to look uop user"
+            ,response = User.class
+    )
+    public User getUserById(
+            @ApiParam(value = "user input user-id to get user")
+            @PathVariable("id") Long id){
         return userService.getUser(id);
     }
 
